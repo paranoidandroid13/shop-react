@@ -1,33 +1,22 @@
-import React, {useState, useContext, createContext} from 'react';
+import React, {useState, useReducer, useContext, createContext} from 'react';
+import Cookies from 'universal-cookie'
+import AuthReducer from './AuthReducer'
 
-const AuthContext = createContext();
-const AuthChangeContext = createContext();
-
-export function useAuthState() {
-  const context = useContext(AuthContext)
-  if (!context) {
-    throw new Error('error')
-  }
-  return context;
-}
-
-export function useAuthChangeContext() {
-  const context = useContext(AuthChangeContext);
-  if (!context) {
-    throw new Error('error')
-  }
-  return context;
-}
+export const AuthContext = createContext();
+export const AuthDispatchContext = createContext();
+const initialUserState = (
+  localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {}
+)
 
 export const AuthProvider = ({children}) => {
 
-  const [user, dispatch] = useReducer(useAuthChangeContext, initialState)
+  const [userState, dispatch] = useReducer(AuthReducer, initialUserState)
 
   return (
-    <AuthContext.Provider value={user}>
-      <AuthChangeContext.Provider value={dispatch}>
+    <AuthContext.Provider value={userState}>
+      <AuthDispatchContext.Provider value={dispatch}>
         {children}
-      </AuthChangeContext.Provider>
+      </AuthDispatchContext.Provider>
     </AuthContext.Provider>
   )
 }

@@ -1,42 +1,40 @@
 import React, { useReducer } from "react";
 import Cookies from 'universal-cookie'
 
-  // const setCookie = useEffect(() => {
-  //   const cookies = new Cookies()
-  //   cookies.set('example', 'value', {path: '/'})
-  // }, [])
-
-const cookies = new Cookies();
-const userCookie = cookies.get('user');
-
-const user = (userCookie ? userCookie : '')
-const token = (userCookie ? userCookie.jwt : '')
-
-export const initialState = {
-  userInfo: '' || user,
-  token: '' || token,
-  isLoginRequest: false,
-  error: ''
-}
-
-export const AuthReducer = (initialState, action) => {
+export default function AuthReducer(user, action) {
   switch (action.type) {
-    case "LOGIN_REQUEST": 
+    case 'LOGIN_REQUEST': 
     return {
-      ...initialState,
-      isLoginRequest: true,
+      ...user,
+      isLogIn: false,
+      isLogInRequest: true,
+      hasError: false,
     };
-    case "LOGIN_SUCCESS": 
+    case 'LOGIN_SUCCESS':
+      return {
+        ...user,
+        isLogIn: true,
+        isLogInRequest: false,
+        hasError: false,
+      };
+    case 'LOGIN_ERROR':
+      return {
+        ...user,
+        isLogIn: false,
+        isLogInRequest: true,
+        hasError: true,
+      };
+    case 'ADD_USER': 
+      return {
+        user: action.payload,
+      };
+    case 'ADD_USER_ERROR': 
     return {
-      ...initialState,
-      user: action.payload.user,
-      token: action.payload.jwt,
-      isLoginRequest: false,
-    };
-    case "LOGOUT": 
-    return {
-      ...initialState,
-      isLoginRequest: false,
+      ...user,
+      error: [action.payload]
     }
+      default: 
+        return user;
   }
+
 }

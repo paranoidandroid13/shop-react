@@ -12,21 +12,28 @@ border-radius: 5px;
 border: 1px solid ${colors.main};
 outline: none;
 color: ${colors.main};
+margin-bottom: 12px;
+padding: 12px;
 ::placeholder {
     color: palevioletred;
     text-transform: uppercase;
   }
-  label {
+`
+
+const StyledLabel = styled.label`
     text-transform: uppercase;
     font-size: 14px;
-  }
+    color: ${colors.main};
+    font-weight: 500;
+    line-height: 1.5;
+    padding-left: 2px;
 `
 
 const Input = (props) => {
   return (
     <div>
-      <label htmlFor={props.id}>{props.placeholder}</label>
-      <StyledInput placeholder={props.placeholder} value={props.value} 
+      <StyledLabel htmlFor={props.id}>{props.label}</StyledLabel>
+      <StyledInput type={props.type || 'text'} placeholder={props.placeholder} value={props.value} 
       onChange={props.onChange} id={props.id} />
     </div>
 
