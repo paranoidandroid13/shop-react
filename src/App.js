@@ -4,6 +4,7 @@ import { AuthProvider } from './contexts/AuthContext'
 import './App.css'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Products from './pages/Products'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/sign-up" component={Register} />
+          <Route path="/" component={Products} />
         </Switch>
       </Router>
     </AuthProvider>

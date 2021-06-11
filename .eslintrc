@@ -25,6 +25,8 @@
     "ENABLE_SOCKETS": true
   },
   "rules": {
+    "no-return-await": "off",
+
     "prettier/prettier": ["warn"],
     "import/prefer-default-export": "off",
     "space-before-function-paren": "off",

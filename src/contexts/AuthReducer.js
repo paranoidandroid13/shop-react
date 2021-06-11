@@ -27,6 +27,7 @@ export default function AuthReducer(user, action) {
     case 'ADD_USER': 
       return {
         user: action.payload,
+        isLogIn: true,
       };
     case 'ADD_USER_ERROR': 
     return {

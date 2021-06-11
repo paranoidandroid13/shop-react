@@ -37,9 +37,9 @@ function RegisterForm(props) {
       return false;
     }
     await axios.post(`https://mockapi.42.works/api/sign_up`, {
-      'email': email,
-      'password': password,
-      "password_confirmation": doublePassword
+      email,
+      password,
+      'password_confirmation': doublePassword
     })
     const user = {
       email,
