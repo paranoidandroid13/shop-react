@@ -1,10 +1,10 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
+import { ProductsProvider } from './pages/Products'
 import './App.css'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import Products from './pages/Products'
 
 function App() {
   return (
@@ -13,7 +13,9 @@ function App() {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/sign-up" component={Register} />
-          <Route path="/" component={Products} />
+          <ProductsProvider>
+            <Route path="/" component={ProductsProvider} />
+          </ProductsProvider>
         </Switch>
       </Router>
     </AuthProvider>

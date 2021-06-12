@@ -1,12 +1,11 @@
-import React from 'react' 
+import React, {useContext} from 'react' 
+import {ProductsContext} from '../pages/Products'
 
 function ProductList(props) {
-  const productList = props.products.map((item) => {
-    <div ke></div>
-  })
+  const [products, setProducts] = useContext(ProductsContext)
   return (
-  
+    <div>{JSON.stringify(products)}</div>
   )
 }
 
-export default ProductList 
+export default ProductList
