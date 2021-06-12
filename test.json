@@ -1,0 +1,375 @@
+{
+  "/api/posts": {
+  "get": {
+    "description": "List all available posts. If a user is unauthorized, lists only those posts, that were marked as public (not private).",
+    "operationId": "MockNoticeBoardApiWeb.Posts.PostController.index",
+    "parameters": [],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "OK"
+      }
+    },
+    "summary": "List all posts",
+    "tags": [
+      "API | Posts"
+    ]
+  },
+  "post": {
+    "description": "Creates a new post for an authorized user. Necessary params are shown here",
+    "operationId": "MockNoticeBoardApiWeb.Posts.PostController.create",
+    "parameters": [
+      {
+        "description": "Post creation parameters",
+        "in": "body",
+        "name": "post",
+        "required": true,
+        "schema": {
+          "$ref": "#/definitions/post"
+        }
+      }
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "OK"
+      },
+      "401": {
+        "description": "Unathorized"
+      },
+      "422": {
+        "description": "Unprocessable entity"
+      }
+    },
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "summary": "Create new post",
+    "tags": [
+      "API | Posts"
+    ]
+  }
+},
+"/api/posts/{id}": {
+  "delete": {
+    "description": "Removes post by given id. Returns post's body",
+    "operationId": "MockNoticeBoardApiWeb.Posts.PostController.delete",
+    "parameters": [
+      {
+        "description": "Fund id",
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "integer",
+        "x-example": 1
+      }
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "204": {
+        "description": "OK"
+      },
+      "404": {
+        "description": "Not found"
+      }
+    },
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "summary": "Delete post by id",
+    "tags": [
+      "API | Posts"
+    ]
+  },
+  "get": {
+    "description": "Shows post by a given id parameter. If a user is unauthorized, and post is private, throws with 403 (forbidden) error.",
+    "operationId": "MockNoticeBoardApiWeb.Posts.PostController.show",
+    "parameters": [
+      {
+        "description": "Post id",
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "integer",
+        "x-example": 1
+      }
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "OK"
+      },
+      "403": {
+        "description": "Forbidden"
+      },
+      "404": {
+        "description": "Not found"
+      }
+    },
+    "summary": "Show post by id",
+    "tags": [
+      "API | Posts"
+    ]
+  },
+  "put": {
+    "description": "Changes selected post. Input shape is same as POST params: {\"post\": {...}} ",
+    "operationId": "MockNoticeBoardApiWeb.Posts.PostController.update",
+    "parameters": [
+      {
+        "description": "Post id",
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "integer",
+        "x-example": 1
+      },
+      {
+        "description": "Post parameters",
+        "in": "body",
+        "name": "post",
+        "required": true,
+        "schema": {
+          "$ref": "#/definitions/post"
+        }
+      }
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "OK"
+      },
+      "401": {
+        "description": "Unathorized"
+      },
+      "403": {
+        "description": "Forbidden"
+      },
+      "422": {
+        "description": "Unprocessable entity"
+      }
+    },
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "summary": "Updates selected post",
+    "tags": [
+      "API | Posts"
+    ]
+  }
+},
+"/api/posts/{id}/downvote": {
+  "patch": {
+    "description": "Changes selected post,increasing it's downvote count. If user upvoted this post first, upvote count will be decreased",
+    "operationId": "MockNoticeBoardApiWeb.Posts.PostController.downvote",
+    "parameters": [
+      {
+        "description": "Post id",
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "integer",
+        "x-example": 1
+      }
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "OK"
+      },
+      "401": {
+        "description": "Unathorized"
+      }
+    },
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "summary": "Downvotes selected post",
+    "tags": [
+      "API | Posts"
+    ]
+  }
+},
+"/api/posts/{id}/upvote": {
+  "patch": {
+    "description": "Changes selected post,increasing it's upvote count. If user downvoted this post first, downvote count will be decreased",
+    "operationId": "MockNoticeBoardApiWeb.Posts.PostController.upvote",
+    "parameters": [
+      {
+        "description": "Post id",
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "integer",
+        "x-example": 1
+      }
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "OK"
+      },
+      "401": {
+        "description": "Unathorized"
+      }
+    },
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "summary": "Upvotes selected post",
+    "tags": [
+      "API | Posts"
+    ]
+  }
+},
+"/api/profile": {
+  "get": {
+    "description": "Shows selected user profile",
+    "operationId": "MockNoticeBoardApiWeb.Accounts.UserController.profile",
+    "parameters": [],
+    "responses": {
+      "200": {
+        "description": "OK",
+        "schema": {
+          "$ref": "#/definitions/user"
+        }
+      },
+      "404": {
+        "description": "Not found"
+      }
+    },
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "summary": "Show user profile",
+    "tags": [
+      "Auth"
+    ]
+  }
+},
+"/api/sign_in": {
+  "post": {
+    "description": "Sign in user requred params: [email, password]",
+    "operationId": "MockNoticeBoardApiWeb.Accounts.UserController.sign_in",
+    "parameters": [
+      {
+        "description": "User parameters",
+        "in": "body",
+        "name": "user_params",
+        "required": true,
+        "schema": {
+          "$ref": "#/definitions/user_sign_in"
+        }
+      }
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "OK",
+        "schema": {
+          "$ref": "#/definitions/token_result"
+        }
+      },
+      "422": {
+        "description": "Unprocessable entity"
+      }
+    },
+    "summary": "Sign in user",
+    "tags": [
+      "Auth"
+    ]
+  }
+},
+"/api/sign_out": {
+  "delete": {
+    "description": "Sign out user. Admin Sign out on the /api/admin/sign_out",
+    "operationId": "MockNoticeBoardApiWeb.Accounts.UserController.sign_out",
+    "parameters": [],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "OK",
+        "schema": {
+          "$ref": "#/definitions/user_sign_out"
+        }
+      },
+      "422": {
+        "description": "Unprocessable entity"
+      }
+    },
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "summary": "Sign out user",
+    "tags": [
+      "Auth"
+    ]
+  }
+},
+"/api/sign_up": {
+  "post": {
+    "description": "Register new user",
+    "operationId": "MockNoticeBoardApiWeb.Accounts.UserController.sign_up",
+    "parameters": [
+      {
+        "description": "User parameters",
+        "in": "body",
+        "name": "user_params",
+        "required": true,
+        "schema": {
+          "$ref": "#/definitions/user_sign_up"
+        }
+      }
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "OK",
+        "schema": {
+          "$ref": "#/definitions/token_result"
+        }
+      },
+      "422": {
+        "description": "Unprocessable entity"
+      }
+    },
+    "summary": "Sign in user",
+    "tags": [
+      "Auth"
+    ]
+  }
+}
+}
