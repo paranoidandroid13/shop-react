@@ -7,7 +7,7 @@ export const ProductsContext = createContext()
 
 export const ProductsProvider = (props) => {
   const [products, setProducts] = useState([])
-  
+
   useEffect(() => {
     const initProducts = async () => {
       const { data } = await axios(`https://mockapi.42.works/api/posts`)
@@ -16,11 +16,11 @@ export const ProductsProvider = (props) => {
       })
       setProducts(publicProducts)
     }
-    initProducts()
-    console.log('page', products)
+    // initProducts()
+    // console.log('page', products)
   }, [])
   return (
-    <ProductsContext.Provider value={[products, setProducts]}> 
+    <ProductsContext.Provider value={[products, setProducts]}>
       <ProductList />
     </ProductsContext.Provider>
   )

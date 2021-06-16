@@ -1,11 +1,21 @@
 {
   "parser": "babel-eslint",
   "root": true,
-  "extends": ["airbnb", "prettier", "plugin:react/recommended"],
+  "extends": ["airbnb", "prettier", "plugin:react/recommended", "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript"],
   "parserOptions": {
     "ecmaVersion": 6,
     "ecmaFeatures": {
       "jsx": true
+    }
+  },
+  "settings": {
+    "import/resolver": {
+        "node": {
+            "extensions": [".js", ".jsx", ".ts", ".tsx"],
+            // "moduleDirectory": ['node_modules', 'src/'],
+        }
     }
   },
   "plugins": ["prettier", "react-hooks"],
