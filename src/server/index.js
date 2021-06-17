@@ -1,33 +1,50 @@
 const express = require('express')
 const { readFile, appendFile, writeFile, stat, unlink } = require('fs').promises
+const fs = require('fs')
 const path = require('path')
+const cors = require('cors')
 const axios = require('axios')
 const circularJSON = require('circular-json')
 
 const server = express()
 
-server.use(express.urlencoded({ extended: false }))
-server.use(express.json())
+const setHeaders = () => (req, res, next) => {
+  res.set({
+    'Access-Control-Allow-Origin': '*'
+  })
+  next()
+}
 
-// server.post('/api/v1/auth', (req, res) => {
-//   res.json({ isLogged: true })
-// })
+const middleware = [cors(), setHeaders(), express.urlencoded({ extended: false }), express.json()]
+
+middleware.forEach((item) => server.use(item))
+
+server.get('/api/v1/test', (req, res) => {
+  res.send('lf')
+})
 
 server.get('/api/v1/posts', async (req, res) => {
   const pathToData = path.join(__dirname, '/data/posts.json')
-  const data = await axios(`https://jsonplaceholder.typicode.com/users`)
-  await writeFile(pathToData, circularJSON.stringify(data.data), { encoding: 'utf8' })
-  res.send(circularJSON.stringify(data.data))
+  const posts = await readFile(pathToData, { encoding: 'utf8' })
+  // res.send(circularJSON.stringify(data))
+  res.send(posts)
 })
 
-// server.get('/api/v1/posts', (req, res) => {
-//   readFile(`${__dirname}/data/posts.json`, { encoding: 'utf8' })
-//     .then((posts) => res.send(posts))
-//     .catch(async () => {
-//       const posts = await axios(`https://jsonplaceholder.typicode.com/users`).then((data) => data)
-//       writeFile(`${__dirname}/data/posts.json`, JSON.stringify(posts), { encoding: 'utf8' })
-//       res.send(posts)
-//     })
-// })
+server.get('/api/v1/posts/:id', async (req, res) => {
+  const { id } = req.params
+  const pathToData = path.join(__dirname, '/data/posts.json')
+  const posts = await readFile(pathToData, { encoding: 'utf8' })
+  const findedPost = JSON.parse(posts).data.find((item) => {
+    return item.id === Number(id)
+  })
+
+  if (typeof findedPost === 'undefined') {
+    res.send(`Post with id ${id} doesn't exist`)
+  }
+
+  res.send(findedPost)
+})
+
+server.post('/api/v1/posts')
 
 server.listen(3004, () => {})

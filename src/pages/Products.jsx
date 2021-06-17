@@ -10,14 +10,10 @@ export const ProductsProvider = (props) => {
 
   useEffect(() => {
     const initProducts = async () => {
-      const { data } = await axios(`https://mockapi.42.works/api/posts`)
-      const publicProducts = data.data.filter((item) => {
-        return !item.is_private
-      })
-      setProducts(publicProducts)
+      const { data } = await axios(`http://localhost:3004/api/v1/posts`)
+      setProducts(data.data)
     }
-    // initProducts()
-    // console.log('page', products)
+    initProducts()
   }, [])
   return (
     <ProductsContext.Provider value={[products, setProducts]}>
