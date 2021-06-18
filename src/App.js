@@ -6,6 +6,8 @@ import './App.css'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Counter from './components/Counter'
+import ProductDetail from './components/ProductDetail'
+import ProductCard from './components/ProductCard'
 
 function App() {
   return (
@@ -14,9 +16,10 @@ function App() {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/sign-up" component={Register} />
-          <Route path="/test" component={Counter}/>
+          <Route path="/test" component={Counter} />
           <ProductsProvider>
-            <Route path="/" component={ProductsProvider} />
+            <Route    render={props => {...props} /> exact path="/" component={ProductsProvider} />
+            <Route exact path="/posts/:id" component={ProductDetail} />
           </ProductsProvider>
         </Switch>
       </Router>

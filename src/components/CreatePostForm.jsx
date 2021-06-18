@@ -9,3 +9,5 @@ function CreatePostForm(props) {
 
   return <form className={styles.form} />
 }
+
+export default CreatePostForm
